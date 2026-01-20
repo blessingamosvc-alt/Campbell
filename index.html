@@ -1,0 +1,2418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REMOTAZ - The Operating System for Modern Businesses</title>
+    <meta name="description" content="REMOTAZ builds and manages your marketing, sales & operations systems to scale your business revenue.">
+    <link rel="icon" type="image/png" href="logo.PNG">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+            background: #F8F4F0;
+            color: #111111;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #FFFFFF;
+            border-bottom: 1px solid #E7E1DB;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: #A30000;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        /* Sidebar for Mobile */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: #FFFFFF;
+            padding: 40px 30px;
+            display: none;
+            flex-direction: column;
+            border-right: 1px solid #E7E1DB;
+            z-index: 2000;
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .logo-container {
+            margin-bottom: 50px;
+            text-align: left;
+        }
+
+        .logo-image {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 12px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: #A30000;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .logo-tagline {
+            font-size: 14px;
+            color: #FC6000;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .nav-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #A30000;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #111111;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #FC6000;
+        }
+
+        .nav-links a.active {
+            color: #A30000;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #A30000;
+        }
+
+        .nav-cta {
+            margin-left: 16px;
+        }
+
+        /* Sidebar styles for mobile */
+        .sidebar .nav-links {
+            flex: 1;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .sidebar .nav-links a {
+            padding: 12px 16px;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .sidebar .nav-links a:hover {
+            background: #F8F4F0;
+        }
+
+        .sidebar .nav-links a.active {
+            background: #F8F4F0;
+        }
+
+        .sidebar .nav-links a.active::after {
+            display: none;
+        }
+
+        .sidebar-cta {
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #A30000;
+            color: #FFFFFF;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(163, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #8a0000;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(163, 0, 0, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(163, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: #A30000;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            border: 2px solid #A30000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secondary:hover {
+            background: #A30000;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(163, 0, 0, 0.2);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 90px;
+            padding: 80px 60px;
+            max-width: 1380px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .content-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-bottom: 100px;
+        }
+
+        .hero h1 {
+            font-size: 44px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .hero-title {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 28px;
+            color: #111111;
+        }
+
+        .hero-gradient-text {
+            background: linear-gradient(135deg, #A30000 0%, #FC6000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtext {
+            font-size: 22px;
+            color: #6B6B6B;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            max-width: 900px;
+        }
+
+        .hero .subhead {
+            font-size: 20px;
+            color: #6B6B6B;
+            margin-bottom: 32px;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 32px !important;
+            }
+
+            .hero-subtext {
+                font-size: 16px !important;
+            }
+
+            /* Case Studies Mobile Adjustments */
+            #case-studies .row.g-5 {
+                gap: 2rem !important;
+            }
+
+            #case-studies h2 {
+                font-size: 28px !important;
+            }
+
+            #case-studies .col-12.col-lg-6 > div {
+                padding: 32px 24px !important;
+            }
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .text-link {
+            color: #A30000;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .text-link:hover {
+            color: #FC6000;
+        }
+
+        .trust-line {
+            font-size: 14px;
+            color: #6B6B6B;
+            margin-top: 16px;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 100px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 16px;
+        }
+
+        .section-intro {
+            font-size: 18px;
+            color: #6B6B6B;
+            margin-bottom: 48px;
+            max-width: 800px;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        .card {
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(163, 0, 0, 0.15);
+        }
+
+        /* ========== AOS CUSTOM OVERRIDES ========== */
+
+        /* Ensure AOS elements are visible in active pages */
+        .page.active [data-aos] {
+            pointer-events: auto;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #A30000;
+            margin-bottom: 16px;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #6B6B6B;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .card strong {
+            color: #111111;
+            font-weight: 600;
+        }
+
+        /* Icon Styles */
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        /* Metric Display */
+        .metric-display {
+            background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%);
+            border: 2px solid #E7E1DB;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .metric-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #A30000;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #6B6B6B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .before-after {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .before-after .metric-box {
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .before-after .before {
+            background: #F8F4F0;
+            border: 2px solid #E7E1DB;
+        }
+
+        .before-after .after {
+            background: linear-gradient(135deg, #A30000 0%, #FC6000 100%);
+            color: white;
+        }
+
+        .before-after .value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .before-after .after .value {
+            color: white;
+        }
+
+        .before-after .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .arrow-growth {
+            font-size: 32px;
+            color: #FC6000;
+        }
+
+        .stat-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #A30000 0%, #FC6000 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: 700;
+            font-size: 18px;
+            margin: 16px 0;
+            box-shadow: 0 4px 12px rgba(163, 0, 0, 0.2);
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+
+        .step {
+            background: #FFFFFF;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+        }
+
+        .step-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FC6000;
+            margin-bottom: 12px;
+        }
+
+        .step h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            font-size: 16px;
+            color: #6B6B6B;
+            line-height: 1.6;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .column {
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+        }
+
+        .column h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #A30000;
+            margin-bottom: 24px;
+        }
+
+        .column ul {
+            list-style: none;
+        }
+
+        .column ul li {
+            font-size: 16px;
+            color: #6B6B6B;
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .column ul li:before {
+            content: "•";
+            color: #FC6000;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Service Block */
+        .service-block {
+            background: #FFFFFF;
+            padding: 48px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+            margin-bottom: 32px;
+        }
+
+        .service-block h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #A30000;
+            margin-bottom: 12px;
+        }
+
+        .service-block .best-for {
+            font-size: 16px;
+            color: #FC6000;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .service-block ul {
+            list-style: none;
+        }
+
+        .service-block ul li {
+            font-size: 16px;
+            color: #6B6B6B;
+            padding: 10px 0;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .service-block ul li:before {
+            content: "•";
+            color: #FC6000;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+        }
+
+        /* Case Study Tiles */
+        .case-tiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .case-tile {
+            background: #FFFFFF;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+        }
+
+        .case-tile h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #A30000;
+            margin-bottom: 12px;
+        }
+
+        .case-tile p {
+            font-size: 16px;
+            color: #6B6B6B;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: #FFFFFF;
+            padding: 60px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            color: #6B6B6B;
+            margin-bottom: 32px;
+        }
+
+        /* Calendly Embed */
+        .calendly-embed {
+            min-height: 700px;
+            width: 100%;
+            background: #FFFFFF;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+            overflow: hidden;
+        }
+
+        /* Pricing Highlight */
+        .pricing-highlight {
+            background: #FFF9F5;
+            border-left: 4px solid #FC6000;
+            padding: 32px;
+            margin: 32px 0;
+            border-radius: 8px;
+        }
+
+        .pricing-highlight h4 {
+            color: #A30000;
+            font-size: 22px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .pricing-highlight p {
+            color: #6B6B6B;
+            margin-bottom: 12px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .pricing-highlight .price {
+            color: #A30000;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 16px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFF9F5 100%);
+            margin-top: 120px;
+            padding: 80px 60px 40px;
+            border-top: 3px solid #A30000;
+        }
+
+        .footer-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .footer-logo img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .footer-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #A30000;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-description {
+            font-size: 15px;
+            color: #6B6B6B;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section p {
+            font-size: 14px;
+            color: #6B6B6B;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            display: block;
+            font-size: 14px;
+            color: #6B6B6B;
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: #A30000;
+            padding-left: 4px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: #FFFFFF;
+            border: 2px solid #E7E1DB;
+            border-radius: 50%;
+            color: #A30000;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+
+        .social-links a:hover {
+            background: #A30000;
+            color: #FFFFFF;
+            border-color: #A30000;
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(163, 0, 0, 0.2);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid #E7E1DB;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-bottom p {
+            font-size: 14px;
+            color: #6B6B6B;
+            margin: 0;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            color: #6B6B6B;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #A30000;
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                padding: 60px 24px 32px;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 20px 40px;
+            }
+
+            .nav-links {
+                gap: 24px;
+            }
+
+            .main-content {
+                padding: 60px 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .navbar {
+                padding: 16px 20px;
+            }
+
+            .navbar .nav-links,
+            .navbar .nav-cta {
+                display: none;
+            }
+
+            .sidebar {
+                display: flex;
+            }
+
+            .main-content {
+                margin-top: 80px;
+                padding: 40px 24px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .cards,
+            .steps,
+            .two-column,
+            .case-tiles {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 40px 24px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            /* Case Study CTA Button - Smaller on Mobile */
+            .case-study-cta-btn {
+                font-size: 14px !important;
+                padding: 12px 24px !important;
+            }
+
+            /* Center Case Studies Headers on Mobile */
+            #case-studies h2,
+            #case-studies p[style*="text-transform: uppercase"],
+            #case-studies .col-12.col-lg-6 > p:first-child,
+            #case-studies .col-12.col-lg-6 > h2,
+            #case-studies .col-12.col-lg-6 > p[style*="font-size: 18px"] {
+                text-align: center !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar for Desktop -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <img src="logo.PNG" alt="REMOTAZ Icon">
+            <div class="nav-logo-text">REMOTAZ</div>
+        </div>
+
+        <div class="nav-links">
+            <a href="#" class="nav-link active" data-page="home">Home</a>
+            <a href="#" class="nav-link" data-page="about">About</a>
+            <a href="#" class="nav-link" data-page="services">Services</a>
+            <a href="#" class="nav-link" data-page="pricing">Pricing</a>
+            <a href="#" class="nav-link" data-page="case-studies">Case Studies</a>
+            <a href="#" class="nav-link" data-page="contact">Contact</a>
+        </div>
+
+        <div class="nav-cta">
+            <a href="#" class="btn-primary" data-page="audit" style="padding: 12px 24px; font-size: 15px;">Book a Business Audit</a>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+
+    <!-- Sidebar for Mobile -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo-container">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <img src="logo.PNG" alt="REMOTAZ Icon" style="width: 60px; height: 60px;">
+                <div class="logo-text" style="margin: 0;">REMOTAZ</div>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#" class="nav-link active" data-page="home">Home</a>
+            <a href="#" class="nav-link" data-page="about">About</a>
+            <a href="#" class="nav-link" data-page="services">Services</a>
+            <a href="#" class="nav-link" data-page="pricing">Pricing</a>
+            <a href="#" class="nav-link" data-page="case-studies">Case Studies</a>
+            <a href="#" class="nav-link" data-page="contact">Contact Us</a>
+        </nav>
+
+        <div class="sidebar-cta">
+            <a href="#" class="btn-primary" data-page="audit">Book a Business Audit</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-wrapper">
+            <!-- HOME PAGE -->
+            <div id="home" class="page active">
+                <div class="hero">
+                    <!-- Eyebrow Text -->
+                    <div class="text-center" data-aos="fade-down" style="margin-bottom: 24px;">
+                        <div class="d-inline-block" style="background: #FFF9F5; border: 2px solid #FC6000; color: #A30000; padding: 8px 20px; border-radius: 24px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px;">
+                            THE COMPLETE GROWTH SOLUTION
+                        </div>
+                    </div>
+
+                    <h1 class="hero-title text-md-center" data-aos="fade-up">
+                        We Build & Manage Your<br class="d-none d-md-block">
+                        <span class="hero-gradient-text">Marketing, Sales & Operations</span>
+                    </h1>
+
+                    <p class="hero-subtext text-md-center mx-md-auto" data-aos="fade-up" data-aos-delay="100">
+                        Stop juggling freelancers, tools, and systems. We become your complete growth team—building and running everything from brand to backend so you can focus on what matters most.
+                    </p>
+
+                    <!-- Value Proposition Cards -->
+                    <div class="row g-3 my-4">
+                        <div class="col-12 col-md-4" data-aos="zoom-in">
+                            <div class="text-center p-4 bg-white border rounded-3" style="border: 2px solid #E7E1DB !important; transition: all 0.3s ease;">
+                                <div style="color: #FC6000; font-size: 32px;" class="mb-2"><i class="fas fa-bolt"></i></div>
+                                <div style="font-size: 16px; font-weight: 700; color: #111111;" class="mb-2">Full Execution</div>
+                                <div style="font-size: 14px; color: #6B6B6B;">We don't just plan. We build and run it.</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4" data-aos="zoom-in">
+                            <div class="text-center p-4 bg-white border rounded-3" style="border: 2px solid #E7E1DB !important; transition: all 0.3s ease;">
+                                <div style="color: #A30000; font-size: 32px;" class="mb-2"><i class="fas fa-users"></i></div>
+                                <div style="font-size: 16px; font-weight: 700; color: #111111;" class="mb-2">One Team</div>
+                                <div style="font-size: 14px; color: #6B6B6B;">No more managing multiple vendors.</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4" data-aos="zoom-in">
+                            <div class="text-center p-4 bg-white border rounded-3" style="border: 2px solid #E7E1DB !important; transition: all 0.3s ease;">
+                                <div style="color: #FC6000; font-size: 32px;" class="mb-2"><i class="fas fa-chart-line"></i></div>
+                                <div style="font-size: 16px; font-weight: 700; color: #111111;" class="mb-2">Real Results</div>
+                                <div style="font-size: 14px; color: #6B6B6B;">Systems that drive actual revenue.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scaling Message -->
+                    <div class="my-4 p-4 rounded-4 position-relative overflow-hidden" data-aos="flip-up" style="background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); box-shadow: 0 8px 24px rgba(163, 0, 0, 0.2);">
+                        <div class="position-absolute" style="top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
+                        <div class="position-absolute" style="bottom: -30px; left: -30px; width: 120px; height: 120px; background: rgba(255, 255, 255, 0.05); border-radius: 50%;"></div>
+                        <p class="text-white text-center mb-0 position-relative" style="font-size: clamp(18px, 4vw, 26px); font-weight: 700; line-height: 1.4; z-index: 1;">
+                            Ready to scale to $100k+ monthly revenue?<br>
+                            <span style="font-size: clamp(16px, 3.5vw, 20px); font-weight: 600; opacity: 0.95;">Let's build the systems that make it happen.</span>
+                        </p>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="d-flex flex-wrap gap-3 align-items-center mt-4" data-aos="fade-up">
+                        <a href="#" class="btn btn-primary" data-page="audit" style="background: #A30000; border: none; font-size: 18px; padding: 18px 36px; box-shadow: 0 4px 12px rgba(163, 0, 0, 0.3); font-weight: 700;">Book a Free Business Audit</a>
+                        <a href="#" class="text-link d-inline-flex align-items-center gap-2" data-page="services" style="font-size: 18px;">
+                            See How We Work
+                            <i class="fas fa-arrow-right" style="transition: transform 0.2s;"></i>
+                        </a>
+                    </div>
+
+                    <!-- Trust Indicators -->
+                    <div class="mt-5 pt-4" data-aos="fade-up" style="border-top: 1px solid #E7E1DB;">
+                        <div class="row g-4 text-center">
+                            <div class="col-6 col-md-4">
+                                <div style="font-size: clamp(28px, 5vw, 36px); font-weight: 700; color: #A30000;" class="mb-1">$2M+</div>
+                                <div style="font-size: 14px; color: #6B6B6B; font-weight: 600;">Revenue Generated</div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div style="font-size: clamp(28px, 5vw, 36px); font-weight: 700; color: #FC6000;" class="mb-1">50+</div>
+                                <div style="font-size: 14px; color: #6B6B6B; font-weight: 600;">Systems Built</div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div style="font-size: clamp(28px, 5vw, 36px); font-weight: 700; color: #A30000;" class="mb-1">3x</div>
+                                <div style="font-size: 14px; color: #6B6B6B; font-weight: 600;">Average Growth</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section>
+                    <h2 class="section-title" data-aos="fade-up">What We Do</h2>
+                    <p class="section-intro" data-aos="fade-up">We provide complete end-to-end support for your marketing, sales, and operations—so you can focus on growth while we handle the execution that drives revenue.</p>
+
+                    <div class="card" data-aos="zoom-in" style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); padding: 48px; margin-bottom: 48px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;">
+                            <div>
+                                <svg style="width: 48px; height: 48px; margin-bottom: 16px;" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="32" cy="32" r="28" fill="#FFF9F5"/>
+                                    <path d="M20 32 L28 40 L44 24" stroke="#A30000" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <h3 style="font-size: 22px; margin-bottom: 12px;">Marketing Systems</h3>
+                                <p style="margin-bottom: 0;">From brand positioning to lead generation, we design and manage your complete marketing infrastructure—social media, content, ads, email campaigns, and more.</p>
+                            </div>
+                            <div>
+                                <svg style="width: 48px; height: 48px; margin-bottom: 16px;" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="32" cy="32" r="28" fill="#FFF9F5"/>
+                                    <path d="M20 40 L26 34 L32 38 L38 30 L44 34" stroke="#FC6000" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <h3 style="font-size: 22px; margin-bottom: 12px;">Sales Operations</h3>
+                                <p style="margin-bottom: 0;">We build and run your sales processes—CRM setup, lead nurturing, follow-up automation, client communication, and conversion optimization to close more deals.</p>
+                            </div>
+                            <div>
+                                <svg style="width: 48px; height: 48px; margin-bottom: 16px;" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="32" cy="32" r="28" fill="#FFF9F5"/>
+                                    <circle cx="24" cy="28" r="6" fill="#A30000"/>
+                                    <circle cx="40" cy="28" r="6" fill="#FC6000"/>
+                                    <circle cx="32" cy="42" r="6" fill="#A30000"/>
+                                </svg>
+                                <h3 style="font-size: 22px; margin-bottom: 12px;">Business Operations</h3>
+                                <p style="margin-bottom: 0;">We systemize your backend—SOPs, automation workflows, team coordination, reporting dashboards, and customer support so your business runs smoothly.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-aos="zoom-in" style="background: #FFFFFF; border: 2px solid #A30000; border-radius: 12px; padding: 32px; text-align: center;">
+                        <p style="font-size: 20px; font-weight: 700; color: #A30000; margin: 0;">The result? Your business generates consistent revenue without you juggling multiple tools, freelancers, or employees.</p>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title" data-aos="fade-up">How It Works</h2>
+                    <div class="steps">
+                        <div class="step" data-aos="fade-up">
+                            <div class="step-number">STEP 1</div>
+                            <h4>Business Audit</h4>
+                            <p>We review your current setup, identify gaps, and map the fastest path to improvement.</p>
+                        </div>
+                        <div class="step" data-aos="fade-up">
+                            <div class="step-number">STEP 2</div>
+                            <h4>Systems Plan</h4>
+                            <p>We outline the systems needed across marketing, sales, and operations.</p>
+                        </div>
+                        <div class="step" data-aos="fade-up">
+                            <div class="step-number">STEP 3</div>
+                            <h4>Build and Run</h4>
+                            <p>We implement and manage the infrastructure and execution.</p>
+                        </div>
+                        <div class="step" data-aos="fade-up">
+                            <div class="step-number">STEP 4</div>
+                            <h4>Optimize and Scale</h4>
+                            <p>We track results, tighten performance, and scale what works.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title" data-aos="fade-up">Services Snapshot</h2>
+                    <div class="two-column">
+                        <div class="column" data-aos="fade-right">
+                            <h3>Business Launch Setup</h3>
+                            <ul>
+                                <li>Branding, positioning, and offer foundation</li>
+                                <li>Brand and online presence setup</li>
+                                <li>Social media management</li>
+                                <li>Marketing systems</li>
+                                <li>Lead capture and CRM setup</li>
+                                <li>Sales process and follow-up systems</li>
+                            </ul>
+                        </div>
+                        <div class="column" data-aos="fade-left">
+                            <h3>Growth Systems Management</h3>
+                            <ul>
+                                <li>Marketing system management (channels, lead flow, tracking)</li>
+                                <li>Social media management</li>
+                                <li>Sales system management (process, follow up, conversion)</li>
+                                <li>Operations systems (automation, CRM hygiene, reporting)</li>
+                                <li>Ongoing optimization and scaling support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title" data-aos="fade-up">Case Studies</h2>
+                    <div class="case-tiles">
+                        <div class="case-tile data-aos="zoom-in">
+                            <h4>Credit Repair Business</h4>
+                            <p>Sales process transformation generating an extra $20k monthly</p>
+                        </div>
+                        <div class="case-tile data-aos="zoom-in">
+                            <h4>Fitness Coach</h4>
+                            <p>Marketing and sales overhaul tripling revenue from $5k to $15k+</p>
+                        </div>
+                        <div class="case-tile data-aos="zoom-in">
+                            <h4>Digital Product Business</h4>
+                            <p>Complete operations systemization and client management</p>
+                        </div>
+                    </div>
+                    <a href="#" class="text-link data-aos="fade-up" data-page="case-studies">View detailed case studies →</a>
+                </section>
+
+                <div class="cta-section data-aos="zoom-in">
+                    <h2>Ready to grow with systems that actually work?</h2>
+                    <a href="#" class="btn-primary" data-page="audit">Book a Business Audit</a>
+                </div>
+
+                <div class="footer">
+                    <div class="footer-main">
+                        <!-- Brand Section -->
+                        <div class="footer-brand">
+                            <div class="footer-logo">
+                                <img src="logo.PNG" alt="REMOTAZ">
+                                <div class="footer-logo-text">REMOTAZ</div>
+                            </div>
+                            <p class="footer-description">
+                                The Operating System for Modern Businesses. We build and manage your marketing, sales, and operations systems to scale your business revenue.
+                            </p>
+                            <div class="social-links">
+                                <a href="https://www.instagram.com/remotaz_?igsh=MTF1aGcxdXNraXBpNw%3D%3D&utm_source=qr" target="_blank" title="Instagram" rel="noopener">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/company/remotaz/" target="_blank" title="LinkedIn" rel="noopener">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="footer-section">
+                            <h4>Quick Links</h4>
+                            <a href="#" data-page="home">Home</a>
+                            <a href="#" data-page="about">About</a>
+                            <a href="#" data-page="services">Services</a>
+                            <a href="#" data-page="pricing">Pricing</a>
+                            <a href="#" data-page="case-studies">Case Studies</a>
+                            <a href="#" data-page="contact">Contact</a>
+                        </div>
+
+                        <!-- Contact Info -->
+                        <div class="footer-section">
+                            <h4>Contact</h4>
+                            <p>1942 Broadway Street<br>STE 314C<br>Boulder, CO 80302<br>United States</p>
+                            <a href="mailto:contact@remotaz.com">contact@remotaz.com</a>
+                            <a href="mailto:remotazglobal@gmail.com">remotazglobal@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <!-- Footer Bottom -->
+                    <div class="footer-bottom">
+                        <p>© 2026 Remotaz Global LLC. All rights reserved.</p>
+                        <div class="footer-links">
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">Terms of Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABOUT PAGE -->
+            <div id="about" class="page">
+                <!-- Minimal Hero -->
+                <div style="max-width: 800px; margin: 0 auto 80px; text-align: center;">
+                    <h1 data-aos="fade-down" style="font-size: 48px; font-weight: 700; color: #111111; margin-bottom: 24px; line-height: 1.2;">
+                        Built for Modern Growth
+                    </h1>
+                    <p data-aos="fade-up" data-aos-delay="100" style="font-size: 20px; color: #6B6B6B; line-height: 1.7;">
+                        REMOTAZ builds and manages the core systems that support marketing, sales, and operations. We partner with small and mid-sized businesses that want a structured, modern way to grow without managing every moving part.
+                    </p>
+                </div>
+
+                <!-- Vision & Mission Side by Side -->
+                <section style="margin-bottom: 100px;">
+                    <div class="row g-5">
+                        <div class="col-12 col-md-6" data-aos="fade-right">
+                            <div style="background: #FFFFFF; padding: 48px; border-radius: 16px; border: 1px solid #E7E1DB; height: 100%;">
+                                <div style="width: 60px; height: 4px; background: linear-gradient(90deg, #A30000 0%, #FC6000 100%); margin-bottom: 24px;"></div>
+                                <h2 style="font-size: 28px; font-weight: 700; color: #A30000; margin-bottom: 20px;">Our Vision</h2>
+                                <p style="font-size: 17px; color: #6B6B6B; line-height: 1.8; margin: 0;">
+                                    To empower businesses with a seamless growth engine that scales as effortlessly as today's digital world.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6" data-aos="fade-left">
+                            <div style="background: #FFFFFF; padding: 48px; border-radius: 16px; border: 1px solid #E7E1DB; height: 100%;">
+                                <div style="width: 60px; height: 4px; background: linear-gradient(90deg, #A30000 0%, #FC6000 100%); margin-bottom: 24px;"></div>
+                                <h2 style="font-size: 28px; font-weight: 700; color: #A30000; margin-bottom: 20px;">Our Mission</h2>
+                                <p style="font-size: 17px; color: #6B6B6B; line-height: 1.8; margin: 0;">
+                                    Our mission is to help businesses grow by putting the right systems in place and running them properly. From launch to scale, we handle the setup so growth isn't left to guesswork.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Values - Vertical List Style -->
+                <section style="margin-bottom: 80px;">
+                    <h2 data-aos="fade-up" style="font-size: 36px; font-weight: 700; color: #111111; margin-bottom: 48px; text-align: center;">
+                        Our Core Values
+                    </h2>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <div data-aos="fade-up" data-aos-delay="100" style="border-left: 3px solid #A30000; padding-left: 40px; margin-bottom: 48px;">
+                            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-network-wired" style="color: white; font-size: 24px;"></i>
+                                </div>
+                                <h3 style="font-size: 24px; font-weight: 700; color: #111111; margin: 0;">Systems First</h3>
+                            </div>
+                            <p style="font-size: 17px; color: #6B6B6B; line-height: 1.7; margin: 0;">
+                                We believe sustainable growth comes from well-designed systems, not guesswork. Every strategy we implement is backed by structure and process.
+                            </p>
+                        </div>
+
+                        <div data-aos="fade-up" data-aos-delay="200" style="border-left: 3px solid #FC6000; padding-left: 40px; margin-bottom: 48px;">
+                            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #FC6000 0%, #A30000 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-check-double" style="color: white; font-size: 24px;"></i>
+                                </div>
+                                <h3 style="font-size: 24px; font-weight: 700; color: #111111; margin: 0;">Clear Execution</h3>
+                            </div>
+                            <p style="font-size: 17px; color: #6B6B6B; line-height: 1.7; margin: 0;">
+                                We deliver transparent, measurable results through structured implementation. You'll always know what we're doing and why it matters.
+                            </p>
+                        </div>
+
+                        <div data-aos="fade-up" data-aos-delay="300" style="border-left: 3px solid #A30000; padding-left: 40px;">
+                            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-seedling" style="color: white; font-size: 24px;"></i>
+                                </div>
+                                <h3 style="font-size: 24px; font-weight: 700; color: #111111; margin: 0;">Long-term Growth</h3>
+                            </div>
+                            <p style="font-size: 17px; color: #6B6B6B; line-height: 1.7; margin: 0;">
+                                We build infrastructure that scales with your business for lasting success. No quick fixes—just sustainable systems that grow with you.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA -->
+                <div class="text-center" data-aos="zoom-in" style="background: #FFFFFF; padding: 60px 40px; border-radius: 16px; border: 2px solid #E7E1DB;">
+                    <h2 style="font-size: 32px; font-weight: 700; color: #111111; margin-bottom: 16px;">Ready to Partner with Us?</h2>
+                    <p style="font-size: 17px; color: #6B6B6B; margin-bottom: 32px;">Let's build the systems your business needs to thrive.</p>
+                    <a href="#" class="btn-primary" data-page="audit" style="font-size: 18px; padding: 18px 40px;">Book a Business Audit</a>
+                </div>
+            </div>
+
+            <!-- SERVICES PAGE -->
+            <div id="services" class="page">
+                <!-- Hero -->
+                <div style="margin-bottom: 60px;">
+                    <p data-aos="fade-down" style="font-size: 14px; font-weight: 700; color: #FC6000; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
+                        OUR SERVICES
+                    </p>
+                    <h1 data-aos="fade-up" data-aos-delay="100" style="font-size: 44px; font-weight: 700; color: #111111; margin-bottom: 20px; line-height: 1.2;">
+                        Choose the Support You Need
+                    </h1>
+                    <p data-aos="fade-up" data-aos-delay="200" style="font-size: 19px; color: #6B6B6B; line-height: 1.6; max-width: 800px;">
+                        We start with an audit, then build and manage the right systems based on your business and goals.
+                    </p>
+                </div>
+
+                <!-- Service 1: Launch Setup -->
+                <section style="margin-bottom: 60px;">
+                    <div data-aos="zoom-in" style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 20px; padding: 48px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(163, 0, 0, 0.05) 0%, transparent 70%);"></div>
+
+                        <div class="row g-4">
+                            <div class="col-12 col-lg-4">
+                                <div style="background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); width: 70px; height: 70px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+                                    <i class="fas fa-rocket" style="color: white; font-size: 32px;"></i>
+                                </div>
+                                <h3 style="font-size: 28px; font-weight: 700; color: #A30000; margin-bottom: 16px;">Business Launch Setup</h3>
+                                <p style="background: #FFF9F5; color: #A30000; padding: 8px 16px; border-radius: 20px; display: inline-block; font-size: 14px; font-weight: 600; margin-bottom: 20px;">
+                                    Best for New Businesses
+                                </p>
+                                <p style="font-size: 16px; color: #6B6B6B; line-height: 1.7;">
+                                    Perfect for new businesses or re-launches that need a clean foundation to start strong.
+                                </p>
+                            </div>
+                            <div class="col-12 col-lg-8">
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Branding, positioning, and offer foundation</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Brand and online presence setup</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Social media management</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Marketing systems</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Basic website or landing page setup</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Lead capture, CRM, and pipeline setup</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Sales process, scripts, and follow-up systems</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Launch support and handover</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Service 2: Growth Management -->
+                <section style="margin-bottom: 60px;">
+                    <div data-aos="zoom-in" style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 20px; padding: 48px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; bottom: -50px; left: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(252, 96, 0, 0.05) 0%, transparent 70%);"></div>
+
+                        <div class="row g-4">
+                            <div class="col-12 col-lg-4">
+                                <div style="background: linear-gradient(135deg, #FC6000 0%, #A30000 100%); width: 70px; height: 70px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+                                    <i class="fas fa-chart-line" style="color: white; font-size: 32px;"></i>
+                                </div>
+                                <h3 style="font-size: 28px; font-weight: 700; color: #A30000; margin-bottom: 16px;">Growth Systems Management</h3>
+                                <p style="background: #FFF9F5; color: #FC6000; padding: 8px 16px; border-radius: 20px; display: inline-block; font-size: 14px; font-weight: 600; margin-bottom: 20px;">
+                                    Monthly Subscription
+                                </p>
+                                <p style="font-size: 16px; color: #6B6B6B; line-height: 1.7;">
+                                    For businesses already operating that want structured growth and ongoing support.
+                                </p>
+                            </div>
+                            <div class="col-12 col-lg-8">
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Marketing system management (lead flow, tracking, channel execution)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Social media management</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Sales system management (follow up, pipeline process, conversion support)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Operations systems (automation, reporting, CRM hygiene)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; font-size: 20px; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span style="color: #6B6B6B; font-size: 15px;">Monthly optimization and scaling roadmap</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Service 3: Add-ons -->
+                <section style="margin-bottom: 80px;">
+                    <div data-aos="fade-up" style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 20px; padding: 48px;">
+                        <div style="text-align: center; margin-bottom: 40px;">
+                            <div style="background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); width: 70px; height: 70px; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                                <i class="fas fa-puzzle-piece" style="color: white; font-size: 32px;"></i>
+                            </div>
+                            <h3 style="font-size: 28px; font-weight: 700; color: #A30000; margin-bottom: 12px;">Add-ons & Custom Services</h3>
+                            <p style="font-size: 16px; color: #6B6B6B;">Expand your capabilities with specialized services</p>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Custom website design & development</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>E-commerce platform implementation</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Email marketing configuration</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Sales funnel & lead magnet creation</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Digital product platform setup</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Content strategy development</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Monthly content calendar</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Caption writing & optimization</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Customer support system</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>PR & influencer outreach</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Website revamp</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>CRM rebuild or migration</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Automation workflows</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Creative & design support</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Ad management</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Analytics dashboards</div></div>
+                            <div class="col-12 col-md-6 col-lg-4"><div style="background: white; padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #6B6B6B;"><i class="fas fa-circle" style="color: #FC6000; font-size: 6px; margin-right: 8px;"></i>Process optimization</div></div>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 32px; padding-top: 32px; border-top: 1px solid #E7E1DB;">
+                            <p style="color: #6B6B6B; margin-bottom: 16px;">Need something specific?</p>
+                            <a href="#" class="text-link" data-page="contact" style="font-size: 17px; font-weight: 600;">Contact us for customized services <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Who This Is For -->
+                <section style="margin-bottom: 80px;">
+                    <h2 style="font-size: 32px; font-weight: 700; color: #111111; margin-bottom: 32px; text-align: center;">Who This Is For</h2>
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <div style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 16px; padding: 40px;">
+                            <p style="font-size: 17px; color: #111111; font-weight: 600; margin-bottom: 24px; text-align: center;">We work with founders who are:</p>
+                            <div style="display: grid; gap: 20px;">
+                                <div style="display: flex; gap: 16px; align-items: start;">
+                                    <div style="width: 8px; height: 8px; background: #FC6000; border-radius: 50%; margin-top: 8px; flex-shrink: 0;"></div>
+                                    <p style="color: #6B6B6B; margin: 0; font-size: 16px; line-height: 1.6;">Operating a business but feeling their current brand and systems no longer match their vision and growth trajectory</p>
+                                </div>
+                                <div style="display: flex; gap: 16px; align-items: start;">
+                                    <div style="width: 8px; height: 8px; background: #A30000; border-radius: 50%; margin-top: 8px; flex-shrink: 0;"></div>
+                                    <p style="color: #6B6B6B; margin: 0; font-size: 16px; line-height: 1.6;">Ready to launch a product line, digital offering, or signature service and need full execution from concept to market</p>
+                                </div>
+                                <div style="display: flex; gap: 16px; align-items: start;">
+                                    <div style="width: 8px; height: 8px; background: #FC6000; border-radius: 50%; margin-top: 8px; flex-shrink: 0;"></div>
+                                    <p style="color: #6B6B6B; margin: 0; font-size: 16px; line-height: 1.6;">Seeking complete strategic, creative, and operational support without managing multiple vendors</p>
+                                </div>
+                                <div style="display: flex; gap: 16px; align-items: start;">
+                                    <div style="width: 8px; height: 8px; background: #A30000; border-radius: 50%; margin-top: 8px; flex-shrink: 0;"></div>
+                                    <p style="color: #6B6B6B; margin: 0; font-size: 16px; line-height: 1.6;">Looking for a team that takes full ownership, executes end-to-end, and delivers a complete business transformation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- The Outcome -->
+                <section style="margin-bottom: 80px;">
+                    <div style="background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 20px; padding: 60px 40px; color: white; text-align: center;">
+                        <h2 style="font-size: 32px; font-weight: 700; color: white; margin-bottom: 40px;">The Outcome</h2>
+                        <div class="row g-4">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div style="background: rgba(255,255,255,0.1); padding: 32px; border-radius: 12px; height: 100%;">
+                                    <i class="fas fa-bullseye" style="font-size: 40px; margin-bottom: 16px;"></i>
+                                    <p style="color: white; margin: 0; font-weight: 600; line-height: 1.6;">A market-ready brand built strategically around your vision</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div style="background: rgba(255,255,255,0.1); padding: 32px; border-radius: 12px; height: 100%;">
+                                    <i class="fas fa-cogs" style="font-size: 40px; margin-bottom: 16px;"></i>
+                                    <p style="color: white; margin: 0; font-weight: 600; line-height: 1.6;">A business that operates and scales beyond just your content</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div style="background: rgba(255,255,255,0.1); padding: 32px; border-radius: 12px; height: 100%;">
+                                    <i class="fas fa-hand-holding-usd" style="font-size: 40px; margin-bottom: 16px;"></i>
+                                    <p style="color: white; margin: 0; font-weight: 600; line-height: 1.6;">A launch strategy that generates real revenue, not just engagement</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div style="background: rgba(255,255,255,0.1); padding: 32px; border-radius: 12px; height: 100%;">
+                                    <i class="fas fa-star" style="font-size: 40px; margin-bottom: 16px;"></i>
+                                    <p style="color: white; margin: 0; font-weight: 600; line-height: 1.6;">A refined online presence driven by strategy and intention</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div style="background: rgba(255,255,255,0.1); padding: 32px; border-radius: 12px; height: 100%;">
+                                    <i class="fas fa-chart-line" style="font-size: 40px; margin-bottom: 16px;"></i>
+                                    <p style="color: white; margin: 0; font-weight: 600; line-height: 1.6;">Long-term brand assets and revenue systems built to last</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA -->
+                <div class="text-center">
+                    <h2 style="font-size: 32px; font-weight: 700; color: #111111; margin-bottom: 20px;">Let's Discuss Which Service Fits Your Needs</h2>
+                    <a href="#" class="btn-primary" data-page="audit" style="font-size: 18px; padding: 18px 40px;">Book a Business Audit</a>
+                </div>
+            </div>
+
+            <!-- PRICING PAGE -->
+            <div id="pricing" class="page">
+                <!-- Hero with Highlight Box -->
+                <div style="margin-bottom: 80px;">
+                    <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+                        <h1 data-aos="fade-up" style="font-size: 48px; font-weight: 700; color: #111111; margin-bottom: 24px; line-height: 1.1;">
+                            Pricing Built Around <span style="color: #A30000;">Your Business</span>
+                        </h1>
+                        <p data-aos="fade-up" style="font-size: 20px; color: #6B6B6B; line-height: 1.7; margin-bottom: 40px;">
+                            Every business is unique. Our pricing is customized to match your specific needs, goals, and growth stage.
+                        </p>
+
+                        <!-- Highlight Badge -->
+                        <div data-aos="flip-up" style="display: inline-block; background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #FC6000; padding: 16px 32px; border-radius: 50px;">
+                            <p style="margin: 0; font-size: 16px; font-weight: 700; color: #A30000;">
+                                <i class="fas fa-star" style="margin-right: 8px;"></i>
+                                No One-Size-Fits-All Packages
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Factors -->
+                <section style="margin-bottom: 80px;">
+                    <div data-aos="zoom-in" style="background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 24px; padding: 60px 40px; color: white;">
+                        <h2 style="font-size: 32px; font-weight: 700; color: white; margin-bottom: 16px; text-align: center;">Your Custom Pricing Is Based On</h2>
+                        <p style="font-size: 17px; color: white; opacity: 0.95; margin-bottom: 48px; text-align: center;">
+                            We create a tailored approach that aligns with your budget and objectives
+                        </p>
+
+                        <div class="row g-4">
+                            <div class="col-12 col-md-6" data-aos="fade-up">
+                                <div style="background: rgba(255,255,255,0.15); padding: 32px; border-radius: 16px; height: 100%; backdrop-filter: blur(10px);">
+                                    <div style="width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                                        <i class="fas fa-th-large" style="color: #A30000; font-size: 24px;"></i>
+                                    </div>
+                                    <h4 style="font-size: 20px; font-weight: 700; color: white; margin-bottom: 12px;">Scope of Systems & Services</h4>
+                                    <p style="color: white; opacity: 0.9; margin: 0; line-height: 1.6;">The specific systems and services your business needs to achieve its growth goals.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6" data-aos="fade-up">
+                                <div style="background: rgba(255,255,255,0.15); padding: 32px; border-radius: 16px; height: 100%; backdrop-filter: blur(10px);">
+                                    <div style="width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                                        <i class="fas fa-chart-line" style="color: #FC6000; font-size: 24px;"></i>
+                                    </div>
+                                    <h4 style="font-size: 20px; font-weight: 700; color: white; margin-bottom: 12px;">Business Stage & Revenue Goals</h4>
+                                    <p style="color: white; opacity: 0.9; margin: 0; line-height: 1.6;">Where you are now and where you want to be—we scale our solutions to match.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6" data-aos="fade-up">
+                                <div style="background: rgba(255,255,255,0.15); padding: 32px; border-radius: 16px; height: 100%; backdrop-filter: blur(10px);">
+                                    <div style="width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                                        <i class="fas fa-hands-helping" style="color: #A30000; font-size: 24px;"></i>
+                                    </div>
+                                    <h4 style="font-size: 20px; font-weight: 700; color: white; margin-bottom: 12px;">Management & Support Level</h4>
+                                    <p style="color: white; opacity: 0.9; margin: 0; line-height: 1.6;">How much hands-on support and ongoing management your business requires.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6" data-aos="fade-up">
+                                <div style="background: rgba(255,255,255,0.15); padding: 32px; border-radius: 16px; height: 100%; backdrop-filter: blur(10px);">
+                                    <div style="width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                                        <i class="fas fa-layer-group" style="color: #FC6000; font-size: 24px;"></i>
+                                    </div>
+                                    <h4 style="font-size: 20px; font-weight: 700; color: white; margin-bottom: 12px;">Complexity & Scale</h4>
+                                    <p style="color: white; opacity: 0.9; margin: 0; line-height: 1.6;">The size and complexity of your operations and the systems needed to support them.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- How It Works -->
+                <section style="margin-bottom: 80px;">
+                    <h2 style="font-size: 36px; font-weight: 700; color: #111111; margin-bottom: 48px; text-align: center;">How It Works</h2>
+
+                    <div style="max-width: 900px; margin: 0 auto; position: relative;">
+                        <!-- Vertical Line -->
+                        <div style="position: absolute; left: 29px; top: 60px; bottom: 60px; width: 2px; background: linear-gradient(180deg, #A30000 0%, #FC6000 100%);"></div>
+
+                        <!-- Step 1 -->
+                        <div style="display: flex; gap: 32px; margin-bottom: 48px; position: relative;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1;">
+                                <span style="color: white; font-size: 24px; font-weight: 700;">1</span>
+                            </div>
+                            <div style="flex: 1; padding-top: 8px;">
+                                <h4 style="font-size: 22px; font-weight: 700; color: #111111; margin-bottom: 8px;">Book a Free Business Audit</h4>
+                                <p style="font-size: 16px; color: #6B6B6B; line-height: 1.7; margin: 0;">Schedule a consultation to discuss your business needs, challenges, and growth goals with our team.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div style="display: flex; gap: 32px; margin-bottom: 48px; position: relative;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #FC6000 0%, #A30000 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1;">
+                                <span style="color: white; font-size: 24px; font-weight: 700;">2</span>
+                            </div>
+                            <div style="flex: 1; padding-top: 8px;">
+                                <h4 style="font-size: 22px; font-weight: 700; color: #111111; margin-bottom: 8px;">We Analyze Your Business</h4>
+                                <p style="font-size: 16px; color: #6B6B6B; line-height: 1.7; margin: 0;">Our team conducts a thorough analysis and identifies exactly which systems and strategies you need to succeed.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div style="display: flex; gap: 32px; margin-bottom: 48px; position: relative;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1;">
+                                <span style="color: white; font-size: 24px; font-weight: 700;">3</span>
+                            </div>
+                            <div style="flex: 1; padding-top: 8px;">
+                                <h4 style="font-size: 22px; font-weight: 700; color: #111111; margin-bottom: 8px;">Receive Your Custom Proposal</h4>
+                                <p style="font-size: 16px; color: #6B6B6B; line-height: 1.7; margin: 0;">Get a detailed proposal with clear pricing, timelines, and deliverables tailored specifically to your business.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div style="display: flex; gap: 32px; position: relative;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #FC6000 0%, #A30000 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1;">
+                                <span style="color: white; font-size: 24px; font-weight: 700;">4</span>
+                            </div>
+                            <div style="flex: 1; padding-top: 8px;">
+                                <h4 style="font-size: 22px; font-weight: 700; color: #111111; margin-bottom: 8px;">Get Started & Grow</h4>
+                                <p style="font-size: 16px; color: #6B6B6B; line-height: 1.7; margin: 0;">Once approved, we immediately begin building and managing the systems that will drive your business growth.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Final CTA -->
+                <div style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 24px; padding: 60px 40px; text-align: center;">
+                    <h2 style="font-size: 36px; font-weight: 700; color: #111111; margin-bottom: 16px;">Ready to Get Your Custom Pricing?</h2>
+                    <p style="font-size: 18px; color: #6B6B6B; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Book a Business Audit and we'll create a tailored plan designed specifically for your business needs and budget.
+                    </p>
+                    <a href="#" class="btn-primary" data-page="audit" style="font-size: 18px; padding: 18px 40px;">Book Your Free Audit Now</a>
+
+                    <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid #E7E1DB;">
+                        <p style="font-size: 15px; color: #6B6B6B; margin: 0;">
+                            <i class="fas fa-shield-alt" style="color: #FC6000; margin-right: 8px;"></i>
+                            No obligation. No pressure. Just honest recommendations for your business.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CASE STUDIES PAGE -->
+            <div id="case-studies" class="page">
+                <!-- Hero Section -->
+                <div class="text-center" style="margin-bottom: 60px;">
+                    <div class="d-inline-block mb-3" data-aos="fade-down" style="background: #FFF9F5; border: 2px solid #FC6000; color: #A30000; padding: 8px 20px; border-radius: 24px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px;">
+                        SUCCESS STORIES
+                    </div>
+                    <h1 class="hero-title text-center mb-4" data-aos="fade-up" data-aos-delay="100">
+                        Real Results from <span class="hero-gradient-text">Real Businesses</span>
+                    </h1>
+                    <p class="hero-subtext text-center mx-auto" data-aos="fade-up" data-aos-delay="200" style="max-width: 700px;">
+                        See how we've helped businesses like yours scale revenue through structured systems and strategic execution.
+                    </p>
+                </div>
+
+                <!-- Case Study 1: Credit Repair -->
+                <section style="margin-bottom: 80px;">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-12 col-lg-6" data-aos="fade-right">
+                            <p style="font-size: 13px; font-weight: 700; color: #A30000; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
+                                CREDIT REPAIR BUSINESS
+                            </p>
+                            <h2 style="font-size: 36px; font-weight: 700; color: #111111; margin-bottom: 20px; line-height: 1.2;">
+                                +$20,000 in Extra Revenue in 30 Days
+                            </h2>
+                            <p style="font-size: 18px; color: #6B6B6B; line-height: 1.6; margin-bottom: 24px;">
+                                Sales Process Transformation
+                            </p>
+
+                            <div class="mb-4">
+                                <h4 style="font-size: 16px; font-weight: 700; color: #111111; margin-bottom: 12px;">
+                                    <i class="fas fa-exclamation-circle" style="color: #FC6000; margin-right: 8px;"></i>
+                                    The Challenge
+                                </h4>
+                                <p style="color: #6B6B6B; line-height: 1.6;">
+                                    Inefficient sales processes with significant loopholes costing conversions and revenue. Inconsistent follow-up and no structured approach to closing leads.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4 style="font-size: 16px; font-weight: 700; color: #111111; margin-bottom: 12px;">
+                                    <i class="fas fa-cogs" style="color: #A30000; margin-right: 8px;"></i>
+                                    Our Solution
+                                </h4>
+                                <p style="color: #6B6B6B; line-height: 1.6;">
+                                    Complete sales process takeover. We handled all client communications, implemented proven sales scripts, systematic lead nurturing, and actively closed deals on their behalf.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6" data-aos="fade-left">
+                            <div style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 16px; padding: 40px;">
+                                <div class="text-center mb-4">
+                                    <div class="stat-badge">+$20,000</div>
+                                    <p style="margin-top: 12px; color: #6B6B6B; font-size: 15px;">Generated in just 30 days</p>
+                                </div>
+
+                                <div class="row g-3 text-center">
+                                    <div class="col-4">
+                                        <div style="font-size: 36px; font-weight: 700; color: #A30000;">100%</div>
+                                        <div style="font-size: 13px; color: #6B6B6B; margin-top: 4px;">Lead Follow-Up</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="font-size: 36px; font-weight: 700; color: #FC6000;">3x</div>
+                                        <div style="font-size: 13px; color: #6B6B6B; margin-top: 4px;">Response Time</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="font-size: 36px; font-weight: 700; color: #A30000;">45%</div>
+                                        <div style="font-size: 13px; color: #6B6B6B; margin-top: 4px;">Conversion Boost</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Case Study 2: Fitness Coach -->
+                <section style="margin-bottom: 80px;">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-12 col-lg-6 order-lg-2">
+                            <p style="font-size: 13px; font-weight: 700; color: #FC6000; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
+                                FITNESS COACHING
+                            </p>
+                            <h2 style="font-size: 36px; font-weight: 700; color: #111111; margin-bottom: 20px; line-height: 1.2;">
+                                From $5k to $15k+ Monthly Revenue
+                            </h2>
+                            <p style="font-size: 18px; color: #6B6B6B; line-height: 1.6; margin-bottom: 24px;">
+                                Marketing & Sales Transformation
+                            </p>
+
+                            <div class="mb-4">
+                                <h4 style="font-size: 16px; font-weight: 700; color: #111111; margin-bottom: 12px;">
+                                    <i class="fas fa-exclamation-circle" style="color: #FC6000; margin-right: 8px;"></i>
+                                    The Challenge
+                                </h4>
+                                <p style="color: #6B6B6B; line-height: 1.6;">
+                                    Generating insufficient leads and attracting the wrong target audience, severely impacting sales performance and ability to reach ideal clients.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4 style="font-size: 16px; font-weight: 700; color: #111111; margin-bottom: 12px;">
+                                    <i class="fas fa-cogs" style="color: #A30000; margin-right: 8px;"></i>
+                                    Our Solution
+                                </h4>
+                                <p style="color: #6B6B6B; line-height: 1.6;">
+                                    Complete Meta ads optimization, Business Suite setup, customized sales scripts, lead nurturing, deal closing, and elevated social media presence with community engagement.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 order-lg-1">
+                            <div style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 16px; padding: 40px;">
+                                <div class="d-flex align-items-center justify-content-center gap-4 mb-4" style="flex-wrap: wrap;">
+                                    <div class="text-center p-3" style="background: #F8F4F0; border-radius: 12px; flex: 1; min-width: 120px;">
+                                        <div style="font-size: 14px; color: #6B6B6B; margin-bottom: 8px;">Before</div>
+                                        <div style="font-size: 32px; font-weight: 700; color: #6B6B6B;">$5k/mo</div>
+                                    </div>
+                                    <div style="color: #FC6000; font-size: 32px;">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                    <div class="text-center p-3" style="background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 12px; flex: 1; min-width: 120px;">
+                                        <div style="font-size: 14px; color: white; margin-bottom: 8px; opacity: 0.9;">After</div>
+                                        <div style="font-size: 32px; font-weight: 700; color: white;">$15k+/mo</div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mb-3">
+                                    <div class="metric-number">3x</div>
+                                    <div class="metric-label">Revenue Growth</div>
+                                </div>
+
+                                <div class="row g-3 text-center">
+                                    <div class="col-4">
+                                        <div style="font-size: 36px; font-weight: 700; color: #A30000;">200%</div>
+                                        <div style="font-size: 13px; color: #6B6B6B; margin-top: 4px;">Lead Quality</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="font-size: 36px; font-weight: 700; color: #FC6000;">65%</div>
+                                        <div style="font-size: 13px; color: #6B6B6B; margin-top: 4px;">Conversion Rate</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="font-size: 36px; font-weight: 700; color: #A30000;">4x</div>
+                                        <div style="font-size: 13px; color: #6B6B6B; margin-top: 4px;">Engagement</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Case Study 3: Digital Product -->
+                <section style="margin-bottom: 80px;">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-12 col-lg-6">
+                            <p style="font-size: 13px; font-weight: 700; color: #A30000; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
+                                DIGITAL PRODUCT BUSINESS
+                            </p>
+                            <h2 style="font-size: 36px; font-weight: 700; color: #111111; margin-bottom: 20px; line-height: 1.2;">
+                                Complete Business Transformation
+                            </h2>
+                            <p style="font-size: 18px; color: #6B6B6B; line-height: 1.6; margin-bottom: 24px;">
+                                Operations & Systems Overhaul
+                            </p>
+
+                            <div class="mb-4">
+                                <h4 style="font-size: 16px; font-weight: 700; color: #111111; margin-bottom: 12px;">
+                                    <i class="fas fa-exclamation-circle" style="color: #FC6000; margin-right: 8px;"></i>
+                                    The Challenge
+                                </h4>
+                                <p style="color: #6B6B6B; line-height: 1.6;">
+                                    No SOPs, organizational structure, or systematic processes. Disorganized operations making it difficult to scale and maintain quality client service.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4 style="font-size: 16px; font-weight: 700; color: #111111; margin-bottom: 12px;">
+                                    <i class="fas fa-cogs" style="color: #A30000; margin-right: 8px;"></i>
+                                    Our Solution
+                                </h4>
+                                <p style="color: #6B6B6B; line-height: 1.6;">
+                                    Created comprehensive SOPs, built complete organizational structure, implemented folder systems, CRM setup, systemized email management, and handled all client communications.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6">
+                            <div style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 16px; padding: 40px;">
+                                <div class="text-center mb-4">
+                                    <div class="stat-badge">From Chaos to Structure</div>
+                                    <p style="margin-top: 12px; color: #6B6B6B; font-size: 15px;">Complete operations overhaul</p>
+                                </div>
+
+                                <div class="row g-3 text-center">
+                                    <div class="col-4">
+                                        <div style="font-size: 36px; font-weight: 700; color: #A30000;">15+</div>
+                                        <div style="font-size: 13px; color: #6B6B6B; margin-top: 4px;">SOPs Created</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="font-size: 36px; font-weight: 700; color: #FC6000;">80%</div>
+                                        <div style="font-size: 13px; color: #6B6B6B; margin-top: 4px;">Time Saved</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="font-size: 36px; font-weight: 700; color: #A30000;">100%</div>
+                                        <div style="font-size: 13px; color: #6B6B6B; margin-top: 4px;">Satisfaction</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Client Reviews Section -->
+                <section style="margin-bottom: 80px;">
+                    <div style="text-align: center; margin-bottom: 48px;">
+                        <h2 style="font-size: 36px; font-weight: 700; color: #111111; margin-bottom: 16px;">
+                            What Our Clients Say
+                        </h2>
+                        <p style="font-size: 18px; color: #6B6B6B;">Real feedback from real clients</p>
+                    </div>
+
+                    <div class="row g-4">
+                        <!-- Review 1 -->
+                        <div class="col-12 col-md-6">
+                            <div style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 16px; padding: 32px; height: 100%; position: relative;">
+                                <div style="position: absolute; top: 20px; right: 20px;">
+                                    <i class="fas fa-quote-right" style="font-size: 40px; color: #FFF9F5;"></i>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                </div>
+                                <p style="font-size: 17px; color: #111111; line-height: 1.7; margin-bottom: 24px; position: relative; z-index: 1;">
+                                    "Y'all have literally been a true blessing in my business. Super excited for what is to come."
+                                </p>
+                                <div style="padding-top: 20px; border-top: 1px solid #E7E1DB;">
+                                    <p style="font-weight: 700; color: #A30000; margin: 0; font-size: 15px;">Client Testimonial</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review 2 -->
+                        <div class="col-12 col-md-6">
+                            <div style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 16px; padding: 32px; height: 100%; position: relative;">
+                                <div style="position: absolute; top: 20px; right: 20px;">
+                                    <i class="fas fa-quote-right" style="font-size: 40px; color: #FFF9F5;"></i>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                </div>
+                                <p style="font-size: 17px; color: #111111; line-height: 1.7; margin-bottom: 24px; position: relative; z-index: 1;">
+                                    "Congratulations on bringing in almost $25k in sales in the last month. I hope we triple the numbers soon."
+                                </p>
+                                <div style="padding-top: 20px; border-top: 1px solid #E7E1DB;">
+                                    <p style="font-weight: 700; color: #A30000; margin: 0; font-size: 15px;">Client Testimonial</p>
+                                    <p style="color: #6B6B6B; margin: 4px 0 0 0; font-size: 14px;">
+                                        <i class="fas fa-chart-line" style="color: #FC6000; margin-right: 6px;"></i>
+                                        $25k Generated
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review 3 -->
+                        <div class="col-12 col-md-6">
+                            <div style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 16px; padding: 32px; height: 100%; position: relative;">
+                                <div style="position: absolute; top: 20px; right: 20px;">
+                                    <i class="fas fa-quote-right" style="font-size: 40px; color: #FFF9F5;"></i>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                </div>
+                                <p style="font-size: 17px; color: #111111; line-height: 1.7; margin-bottom: 24px; position: relative; z-index: 1;">
+                                    "Thanks so much for the ads! My Instagram has been buzzing! And I have lots of appointments booked for next week. I hope I can finally make $50k this month with this amount of leads."
+                                </p>
+                                <div style="padding-top: 20px; border-top: 1px solid #E7E1DB;">
+                                    <p style="font-weight: 700; color: #A30000; margin: 0; font-size: 15px;">Fitness Coach</p>
+                                    <p style="color: #6B6B6B; margin: 4px 0 0 0; font-size: 14px;">
+                                        <i class="fas fa-fire" style="color: #FC6000; margin-right: 6px;"></i>
+                                        High Lead Volume from Ads
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review 4 -->
+                        <div class="col-12 col-md-6">
+                            <div style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 16px; padding: 32px; height: 100%; position: relative;">
+                                <div style="position: absolute; top: 20px; right: 20px;">
+                                    <i class="fas fa-quote-right" style="font-size: 40px; color: #FFF9F5;"></i>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                    <i class="fas fa-star" style="color: #FC6000; font-size: 16px;"></i>
+                                </div>
+                                <p style="font-size: 17px; color: #111111; line-height: 1.7; margin-bottom: 24px; position: relative; z-index: 1;">
+                                    "Great work! We've made $47k this month and this is so impressive because our highest cap has been around $25k-$32k. I hope we achieve more next month! Let's gooooo."
+                                </p>
+                                <div style="padding-top: 20px; border-top: 1px solid #E7E1DB;">
+                                    <p style="font-weight: 700; color: #A30000; margin: 0; font-size: 15px;">Client Testimonial</p>
+                                    <p style="color: #6B6B6B; margin: 4px 0 0 0; font-size: 14px;">
+                                        <i class="fas fa-rocket" style="color: #FC6000; margin-right: 6px;"></i>
+                                        $47k Revenue (Previous Best: $32k)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA Section -->
+                <div class="text-center p-5" style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 16px;">
+                    <h2 style="font-size: 36px; font-weight: 700; color: #111111; margin-bottom: 20px;">
+                        Ready to Write Your Success Story?
+                    </h2>
+                    <p style="font-size: 18px; color: #6B6B6B; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Let's discuss how we can help you achieve similar results for your business.
+                    </p>
+                    <a href="#" class="btn-primary case-study-cta-btn" data-page="audit" style="font-size: 16px; padding: 14px 28px;">Book a Free Business Audit</a>
+                </div>
+            </div>
+
+            <!-- CONTACT PAGE -->
+            <div id="contact" class="page">
+                <!-- Hero -->
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h1 data-aos="fade-down" style="font-size: 48px; font-weight: 700; color: #111111; margin-bottom: 24px; line-height: 1.2;">
+                        Let's Connect
+                    </h1>
+                    <p data-aos="fade-up" data-aos-delay="100" style="font-size: 20px; color: #6B6B6B; line-height: 1.7; max-width: 600px; margin: 0 auto;">
+                        Have questions? Want to discuss your business needs? We're here to help.
+                    </p>
+                </div>
+
+                <!-- Contact Methods -->
+                <section style="margin-bottom: 60px;">
+                    <div class="row g-4">
+                        <!-- Email Card -->
+                        <div class="col-12 col-md-6" data-aos="zoom-in">
+                            <div style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 20px; padding: 40px; text-align: center; height: 100%; transition: all 0.3s ease;">
+                                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+                                    <i class="fas fa-envelope" style="color: white; font-size: 32px;"></i>
+                                </div>
+                                <h3 style="font-size: 22px; font-weight: 700; color: #111111; margin-bottom: 16px;">Email Us</h3>
+                                <p style="color: #6B6B6B; margin-bottom: 20px; font-size: 15px;">Send us an email and we'll get back to you within 24 hours.</p>
+                                <a href="mailto:contact@remotaz.com" style="color: #A30000; font-size: 18px; font-weight: 600; text-decoration: none; display: block; margin-bottom: 8px;">contact@remotaz.com</a>
+                                <a href="mailto:remotazglobal@gmail.com" style="color: #A30000; font-size: 18px; font-weight: 600; text-decoration: none; display: block;">remotazglobal@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <!-- Location Card -->
+                        <div class="col-12 col-md-6" data-aos="zoom-in">
+                            <div style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 20px; padding: 40px; text-align: center; height: 100%; transition: all 0.3s ease;">
+                                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #FC6000 0%, #A30000 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+                                    <i class="fas fa-map-marker-alt" style="color: white; font-size: 32px;"></i>
+                                </div>
+                                <h3 style="font-size: 22px; font-weight: 700; color: #111111; margin-bottom: 16px;">Our Office</h3>
+                                <p style="color: #6B6B6B; margin-bottom: 20px; font-size: 15px;">Visit us at our office location.</p>
+                                <p style="color: #111111; font-size: 16px; line-height: 1.8; margin: 0;">
+                                    1942 Broadway Street<br>
+                                    STE 314C<br>
+                                    Boulder, CO 80302<br>
+                                    United States
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Social Media Section -->
+                <section style="margin-bottom: 60px;">
+                    <div style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 20px; padding: 48px; text-align: center;">
+                        <h3 style="font-size: 28px; font-weight: 700; color: #111111; margin-bottom: 16px;">Follow Us on Social Media</h3>
+                        <p style="color: #6B6B6B; margin-bottom: 32px; font-size: 16px;">Stay updated with our latest news and insights</p>
+
+                        <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                            <a href="https://www.instagram.com/remotaz_?igsh=MTF1aGcxdXNraXBpNw%3D%3D&utm_source=qr" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 12px; background: #FFFFFF; border: 2px solid #E7E1DB; padding: 16px 32px; border-radius: 50px; text-decoration: none; transition: all 0.3s ease;">
+                                <i class="fab fa-instagram" style="color: #A30000; font-size: 24px;"></i>
+                                <span style="color: #111111; font-weight: 600; font-size: 16px;">Instagram</span>
+                            </a>
+                            <a href="https://www.linkedin.com/company/remotaz/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 12px; background: #FFFFFF; border: 2px solid #E7E1DB; padding: 16px 32px; border-radius: 50px; text-decoration: none; transition: all 0.3s ease;">
+                                <i class="fab fa-linkedin-in" style="color: #FC6000; font-size: 24px;"></i>
+                                <span style="color: #111111; font-weight: 600; font-size: 16px;">LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA Section -->
+                <section>
+                    <div style="background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 20px; padding: 60px 40px; text-align: center; color: white;">
+                        <h2 style="font-size: 36px; font-weight: 700; color: white; margin-bottom: 16px;">Ready to Grow Your Business?</h2>
+                        <p style="font-size: 18px; color: white; opacity: 0.95; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                            Book a free business audit and let's discuss how we can help you scale to $100k+ monthly revenue.
+                        </p>
+                        <a href="#" class="btn-primary" data-page="audit" style="background: white; color: #A30000; font-size: 18px; padding: 18px 40px; font-weight: 700;">Book a Free Business Audit</a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- BOOK A BUSINESS AUDIT PAGE -->
+            <div id="audit" class="page">
+                <!-- Hero Section -->
+                <div class="text-center" style="margin-bottom: 60px;">
+                    <div class="d-inline-block mb-3" data-aos="fade-up" style="background: #FFF9F5; border: 2px solid #FC6000; color: #A30000; padding: 8px 20px; border-radius: 24px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px;">
+                        FREE BUSINESS AUDIT
+                    </div>
+                    <h1 class="hero-title text-center mb-4" data-aos="fade-up">
+                        Let's Unlock Your <span class="hero-gradient-text">Growth Potential</span>
+                    </h1>
+                    <p class="hero-subtext text-center mx-auto" data-aos="fade-up" style="max-width: 700px;">
+                        Get a comprehensive review of your marketing, sales, and operations. Discover what's working, what's holding you back, and the exact steps to scale your revenue.
+                    </p>
+                </div>
+
+                <!-- What You'll Get Section -->
+                <section style="margin-bottom: 60px;">
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6" data-aos="zoom-in">
+                            <div class="p-4 h-100" style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 12px;">
+                                <div style="color: #FC6000; font-size: 36px; margin-bottom: 16px;">
+                                    <i class="fas fa-search-dollar"></i>
+                                </div>
+                                <h3 style="font-size: 20px; font-weight: 700; color: #A30000; margin-bottom: 12px;">Audit & Analysis</h3>
+                                <p style="color: #6B6B6B; margin: 0;">We'll analyze your current systems, identify bottlenecks, and pinpoint exactly where revenue is leaking.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6" data-aos="zoom-in">
+                            <div class="p-4 h-100" style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 12px;">
+                                <div style="color: #A30000; font-size: 36px; margin-bottom: 16px;">
+                                    <i class="fas fa-route"></i>
+                                </div>
+                                <h3 style="font-size: 20px; font-weight: 700; color: #A30000; margin-bottom: 12px;">Custom Roadmap</h3>
+                                <p style="color: #6B6B6B; margin: 0;">Get a prioritized action plan with clear next steps tailored specifically to your business and growth goals.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6" data-aos="zoom-in">
+                            <div class="p-4 h-100" style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 12px;">
+                                <div style="color: #FC6000; font-size: 36px; margin-bottom: 16px;">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <h3 style="font-size: 20px; font-weight: 700; color: #A30000; margin-bottom: 12px;">Strategic Insights</h3>
+                                <p style="color: #6B6B6B; margin: 0;">Discover opportunities you're missing and learn which systems will have the biggest impact on your revenue.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6" data-aos="zoom-in">
+                            <div class="p-4 h-100" style="background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%); border: 2px solid #E7E1DB; border-radius: 12px;">
+                                <div style="color: #A30000; font-size: 36px; margin-bottom: 16px;">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                </div>
+                                <h3 style="font-size: 20px; font-weight: 700; color: #A30000; margin-bottom: 12px;">Custom Pricing</h3>
+                                <p style="color: #6B6B6B; margin: 0;">Receive a transparent proposal with pricing designed specifically for your business needs and budget.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Calendly Section -->
+                <section>
+                    <div class="row g-5 align-items-start">
+                        <!-- Left Column - Info -->
+                        <div class="col-12 col-lg-5">
+                            <div class="sticky-top" style="top: 120px;">
+                                <h2 style="font-size: 32px; font-weight: 700; color: #111111; margin-bottom: 24px;">Schedule Your Free Audit</h2>
+                                <p style="font-size: 16px; color: #6B6B6B; line-height: 1.6; margin-bottom: 24px;">
+                                    Select a time that works best for you. The audit typically takes 30-45 minutes and you'll walk away with actionable insights.
+                                </p>
+
+                                <!-- What to Expect -->
+                                <div style="background: #FFFFFF; border-left: 4px solid #FC6000; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+                                    <h4 style="font-size: 18px; font-weight: 700; color: #A30000; margin-bottom: 16px;">What to Expect:</h4>
+                                    <ul style="list-style: none; padding: 0; margin: 0;">
+                                        <li style="padding: 8px 0; color: #6B6B6B; font-size: 15px; display: flex; align-items: start; gap: 12px;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span>Review your current business model and goals</span>
+                                        </li>
+                                        <li style="padding: 8px 0; color: #6B6B6B; font-size: 15px; display: flex; align-items: start; gap: 12px;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span>Identify gaps in your marketing, sales, and operations</span>
+                                        </li>
+                                        <li style="padding: 8px 0; color: #6B6B6B; font-size: 15px; display: flex; align-items: start; gap: 12px;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span>Discuss solutions tailored to your needs</span>
+                                        </li>
+                                        <li style="padding: 8px 0; color: #6B6B6B; font-size: 15px; display: flex; align-items: start; gap: 12px;">
+                                            <i class="fas fa-check-circle" style="color: #FC6000; margin-top: 2px; flex-shrink: 0;"></i>
+                                            <span>Receive custom pricing and next steps</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Trust Badge -->
+                                <div class="text-center p-3" style="background: linear-gradient(135deg, #A30000 0%, #FC6000 100%); border-radius: 12px;">
+                                    <p style="color: #FFFFFF; font-size: 15px; font-weight: 600; margin: 0;">
+                                        <i class="fas fa-shield-alt" style="margin-right: 8px;"></i>
+                                        No commitment required. Zero pressure.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Calendly -->
+                        <div class="col-12 col-lg-7">
+                            <div style="background: #FFFFFF; border: 2px solid #E7E1DB; border-radius: 16px; padding: 32px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);">
+                                <div class="calendly-embed" style="min-height: 700px;">
+                                    <iframe src="https://calendly.com/contact-remotaz/30min" width="100%" height="700" frameborder="0" style="border-radius: 8px;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('[data-page]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = e.currentTarget.getAttribute('data-page');
+
+                // Hide all pages
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+
+                // Scroll to top instantly
+                window.scrollTo({ top: 0, behavior: 'auto' });
+
+                // Show target page
+                document.getElementById(targetPage).classList.add('active');
+
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+
+                const activeNavLink = document.querySelector(`.nav-link[data-page="${targetPage}"]`);
+                if (activeNavLink) {
+                    activeNavLink.classList.add('active');
+                }
+
+                // Close mobile menu if open
+                if (window.innerWidth <= 768) {
+                    document.getElementById('sidebar').classList.remove('active');
+                }
+
+                // Refresh AOS to detect new page elements
+                setTimeout(() => {
+                    if (typeof AOS !== 'undefined') {
+                        AOS.refresh();
+                    }
+                }, 100);
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+
+            if (window.innerWidth <= 768 &&
+                sidebar.classList.contains('active') &&
+                !sidebar.contains(e.target) &&
+                !toggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+
+        // ========== ENHANCED HOVER EFFECTS ==========
+
+        // Add ripple effect to buttons
+        document.addEventListener('click', function(e) {
+            const button = e.target.closest('.btn-primary, .btn-secondary');
+            if (!button) return;
+
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                left: ${x}px;
+                top: ${y}px;
+                pointer-events: none;
+                animation: ripple 0.6s ease-out;
+            `;
+
+            button.style.position = 'relative';
+            button.style.overflow = 'hidden';
+            button.appendChild(ripple);
+
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: false,
+                mirror: false,
+                offset: 100,
+                delay: 0,
+                anchorPlacement: 'top-bottom'
+            });
+        });
+
+        // Add event listener to refresh AOS when navigating
+        window.addEventListener('load', function() {
+            // Refresh AOS after a short delay to ensure page is ready
+            setTimeout(function() {
+                AOS.refresh();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
