@@ -594,6 +594,29 @@
             left: 0;
         }
 
+        /* Accordion Styles for Services Snapshot (Mobile Only) */
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .accordion-icon {
+            font-size: 28px;
+            color: #FC6000;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+            display: none; /* Hidden on desktop */
+            line-height: 1;
+        }
+
+        .accordion-content {
+            max-height: none; /* Always visible on desktop */
+            overflow: visible;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+
         /* Service Block */
         .service-block {
             background: #FFFFFF;
@@ -947,6 +970,41 @@
                 grid-template-columns: 1fr;
             }
 
+            /* Accordion Mobile Styles */
+            .services-snapshot-container .accordion-icon {
+                display: block; /* Show accordion icon on mobile */
+            }
+
+            .services-snapshot-container .accordion-header {
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .services-snapshot-container .accordion-content {
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                margin-top: 0;
+            }
+
+            .services-snapshot-container .accordion-item.active .accordion-content {
+                max-height: 1000px; /* Large enough to fit content */
+                opacity: 1;
+                margin-top: 24px;
+            }
+
+            .services-snapshot-container .accordion-item.active .accordion-icon {
+                transform: rotate(45deg);
+            }
+
+            .services-snapshot-container .column h3 {
+                margin-bottom: 0;
+            }
+
+            .services-snapshot-container .accordion-item.active .column h3 {
+                margin-bottom: 24px;
+            }
+
             /* Case Study CTA Button - Smaller on Mobile */
             .case-study-cta-btn {
                 font-size: 14px !important;
@@ -1165,10 +1223,13 @@
 
                 <section>
                     <h2 class="section-title" data-aos="fade-up">Services Snapshot</h2>
-                    <div class="two-column">
-                        <div class="column" data-aos="fade-right">
-                            <h3>Business Launch Setup</h3>
-                            <ul>
+                    <div class="two-column services-snapshot-container">
+                        <div class="column accordion-item" data-aos="fade-right">
+                            <div class="accordion-header">
+                                <h3>Business Launch Setup</h3>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <ul class="accordion-content">
                                 <li>Branding, positioning, and offer foundation</li>
                                 <li>Brand and online presence setup</li>
                                 <li>Social media management</li>
@@ -1177,9 +1238,12 @@
                                 <li>Sales process and follow-up systems</li>
                             </ul>
                         </div>
-                        <div class="column" data-aos="fade-left">
-                            <h3>Growth Systems Management</h3>
-                            <ul>
+                        <div class="column accordion-item" data-aos="fade-left">
+                            <div class="accordion-header">
+                                <h3>Growth Systems Management</h3>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <ul class="accordion-content">
                                 <li>Marketing system management (channels, lead flow, tracking)</li>
                                 <li>Social media management</li>
                                 <li>Sales system management (process, follow up, conversion)</li>
@@ -2388,6 +2452,40 @@
             }
         `;
         document.head.appendChild(style);
+
+        // ========== ACCORDION FUNCTIONALITY FOR SERVICES SNAPSHOT ==========
+        function initServiceAccordion() {
+            const accordionItems = document.querySelectorAll('.services-snapshot-container .accordion-item');
+
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+
+                header.addEventListener('click', function() {
+                    // Only work on mobile
+                    if (window.innerWidth <= 768) {
+                        // Toggle active class
+                        item.classList.toggle('active');
+                    }
+                });
+            });
+        }
+
+        // Initialize accordion on page load
+        document.addEventListener('DOMContentLoaded', initServiceAccordion);
+
+        // Re-initialize when window is resized to ensure proper behavior
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                // Remove active class if switching to desktop
+                if (window.innerWidth > 768) {
+                    document.querySelectorAll('.services-snapshot-container .accordion-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                }
+            }, 250);
+        });
     </script>
 
     <!-- AOS Library -->
