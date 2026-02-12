@@ -1,0 +1,1567 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Hide "and many more" element on desktop by default */
+        .addon-more {
+            display: none;
+        }
+
+        /* Fix sticky elements to stay below navbar */
+        .sticky-top {
+            z-index: 100;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+            background: #F8F4F0;
+            color: #111111;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #FFFFFF;
+            border-bottom: 1px solid #E7E1DB;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: #A30000;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        /* Sidebar for Mobile */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: #FFFFFF;
+            padding: 40px 30px;
+            display: none;
+            flex-direction: column;
+            border-right: 1px solid #E7E1DB;
+            z-index: 2000;
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .logo-container {
+            margin-bottom: 50px;
+            text-align: left;
+        }
+
+        .logo-image {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 12px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: #A30000;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .logo-tagline {
+            font-size: 14px;
+            color: #FC6000;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .nav-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #A30000;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #111111;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #FC6000;
+        }
+
+        .nav-links a.active {
+            color: #A30000;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #A30000;
+        }
+
+        .nav-cta {
+            margin-left: 16px;
+        }
+
+        /* Sidebar styles for mobile */
+        .sidebar .nav-links {
+            flex: 1;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .sidebar .nav-links a {
+            padding: 12px 16px;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .sidebar .nav-links a:hover {
+            background: #F8F4F0;
+        }
+
+        .sidebar .nav-links a.active {
+            background: linear-gradient(90deg, #FFF9F5 0%, #F8F4F0 100%);
+            color: #A30000;
+            font-weight: 700;
+            border-left: 4px solid #A30000;
+            padding-left: 16px;
+        }
+
+        .sidebar .nav-links a.active::after {
+            display: none;
+        }
+
+        .sidebar-cta {
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #A30000;
+            color: #FFFFFF;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(163, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #8a0000;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(163, 0, 0, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(163, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: #A30000;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            border: 2px solid #A30000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secondary:hover {
+            background: #A30000;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(163, 0, 0, 0.2);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 90px;
+            padding: 0;
+        }
+
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                padding: 0 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 0 24px;
+            }
+        }
+
+        /* Alternative content wrapper for other pages */
+        .content-wrapper-alt {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper-alt {
+                padding: 0 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper-alt {
+                padding: 0 10px;
+            }
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-bottom: 100px;
+        }
+
+        .hero h1 {
+            font-size: 44px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .hero-title {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 28px;
+            color: #111111;
+        }
+
+        .hero-gradient-text {
+            background: linear-gradient(135deg, #A30000 0%, #FC6000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtext {
+            font-size: 22px;
+            color: #6B6B6B;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            max-width: 900px;
+        }
+
+        .hero .subhead {
+            font-size: 20px;
+            color: #6B6B6B;
+            margin-bottom: 32px;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 32px !important;
+            }
+
+            .hero-subtext {
+                font-size: 16px !important;
+            }
+
+            /* Case Studies Mobile Adjustments */
+            #case-studies .row.g-5 {
+                gap: 2rem !important;
+            }
+
+            #case-studies h2 {
+                font-size: 28px !important;
+            }
+
+            #case-studies .col-12.col-lg-6 > div {
+                padding: 32px 24px !important;
+            }
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .text-link {
+            color: #A30000;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .text-link:hover {
+            color: #FC6000;
+        }
+
+        .trust-line {
+            font-size: 14px;
+            color: #6B6B6B;
+            margin-top: 16px;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 100px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 16px;
+        }
+
+        .section-intro {
+            font-size: 18px;
+            color: #6B6B6B;
+            margin-bottom: 48px;
+            max-width: 800px;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        .card {
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(163, 0, 0, 0.15);
+        }
+
+        /* ========== AOS CUSTOM OVERRIDES ========== */
+
+        /* Ensure AOS elements are visible in active pages */
+        .page.active [data-aos] {
+            pointer-events: auto;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #A30000;
+            margin-bottom: 16px;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #6B6B6B;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .card strong {
+            color: #111111;
+            font-weight: 600;
+        }
+
+        /* Icon Styles */
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        /* Metric Display */
+        .metric-display {
+            background: linear-gradient(135deg, #FFF9F5 0%, #FFFFFF 100%);
+            border: 2px solid #E7E1DB;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .metric-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #A30000;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #6B6B6B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .before-after {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .before-after .metric-box {
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .before-after .before {
+            background: #F8F4F0;
+            border: 2px solid #E7E1DB;
+        }
+
+        .before-after .after {
+            background: linear-gradient(135deg, #A30000 0%, #FC6000 100%);
+            color: white;
+        }
+
+        .before-after .value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .before-after .after .value {
+            color: white;
+        }
+
+        .before-after .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .arrow-growth {
+            font-size: 32px;
+            color: #FC6000;
+        }
+
+        .stat-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #A30000 0%, #FC6000 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: 700;
+            font-size: 18px;
+            margin: 16px 0;
+            box-shadow: 0 4px 12px rgba(163, 0, 0, 0.2);
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+
+        .step {
+            background: #FFFFFF;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+        }
+
+        .step-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FC6000;
+            margin-bottom: 12px;
+        }
+
+        .step h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            font-size: 16px;
+            color: #6B6B6B;
+            line-height: 1.6;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .column {
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+        }
+
+        .column h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #A30000;
+            margin-bottom: 24px;
+        }
+
+        .column ul {
+            list-style: none;
+        }
+
+        .column ul li {
+            font-size: 16px;
+            color: #6B6B6B;
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .column ul li:before {
+            content: "•";
+            color: #FC6000;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Accordion Styles for Services Snapshot (Mobile Only) */
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .accordion-icon {
+            font-size: 28px;
+            color: #FC6000;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+            display: none; /* Hidden on desktop */
+            line-height: 1;
+        }
+
+        .accordion-content {
+            max-height: none; /* Always visible on desktop */
+            overflow: visible;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Service Block */
+        .service-block {
+            background: #FFFFFF;
+            padding: 48px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+            margin-bottom: 32px;
+        }
+
+        .service-block h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #A30000;
+            margin-bottom: 12px;
+        }
+
+        .service-block .best-for {
+            font-size: 16px;
+            color: #FC6000;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .service-block ul {
+            list-style: none;
+        }
+
+        .service-block ul li {
+            font-size: 16px;
+            color: #6B6B6B;
+            padding: 10px 0;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .service-block ul li:before {
+            content: "•";
+            color: #FC6000;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+        }
+
+        /* Case Study Tiles */
+        .case-tiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .case-tile {
+            background: #FFFFFF;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+        }
+
+        .case-tile h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #A30000;
+            margin-bottom: 12px;
+        }
+
+        .case-tile p {
+            font-size: 16px;
+            color: #6B6B6B;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: #FFFFFF;
+            padding: 60px;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            color: #6B6B6B;
+            margin-bottom: 32px;
+        }
+
+        /* Calendly Embed */
+        .calendly-embed {
+            min-height: 700px;
+            width: 100%;
+            background: #FFFFFF;
+            border-radius: 12px;
+            border: 1px solid #E7E1DB;
+            overflow: hidden;
+        }
+
+        /* Pricing Highlight */
+        .pricing-highlight {
+            background: #FFF9F5;
+            border-left: 4px solid #FC6000;
+            padding: 32px;
+            margin: 32px 0;
+            border-radius: 8px;
+        }
+
+        .pricing-highlight h4 {
+            color: #A30000;
+            font-size: 22px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .pricing-highlight p {
+            color: #6B6B6B;
+            margin-bottom: 12px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .pricing-highlight .price {
+            color: #A30000;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 16px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFF9F5 100%);
+            margin-top: 120px;
+            padding: 80px 60px 40px;
+            border-top: 3px solid #A30000;
+        }
+
+        .footer-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .footer-logo img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .footer-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #A30000;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-description {
+            font-size: 15px;
+            color: #6B6B6B;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section p {
+            font-size: 14px;
+            color: #6B6B6B;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            display: block;
+            font-size: 14px;
+            color: #6B6B6B;
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: #A30000;
+            padding-left: 4px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: #FFFFFF;
+            border: 2px solid #E7E1DB;
+            border-radius: 50%;
+            color: #A30000;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+
+        .social-links a:hover {
+            background: #A30000;
+            color: #FFFFFF;
+            border-color: #A30000;
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(163, 0, 0, 0.2);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid #E7E1DB;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-bottom p {
+            font-size: 14px;
+            color: #6B6B6B;
+            margin: 0;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            color: #6B6B6B;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #A30000;
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                padding: 60px 24px 32px;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 20px 40px;
+            }
+
+            .nav-links {
+                gap: 24px;
+            }
+
+            .main-content {
+                padding: 60px 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .navbar {
+                padding: 16px 20px;
+            }
+
+            .navbar .nav-links,
+            .navbar .nav-cta {
+                display: none;
+            }
+
+            .sidebar {
+                display: flex;
+            }
+
+            .main-content {
+                margin-top: 80px;
+                padding: 40px 24px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .cards,
+            .steps,
+            .two-column,
+            .case-tiles {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 40px 24px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            /* Accordion Mobile Styles */
+            .services-snapshot-container .accordion-icon {
+                display: block; /* Show accordion icon on mobile */
+            }
+
+            .services-snapshot-container .accordion-header {
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .services-snapshot-container .accordion-content {
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                margin-top: 0;
+            }
+
+            .services-snapshot-container .accordion-item.active .accordion-content {
+                max-height: 1000px; /* Large enough to fit content */
+                opacity: 1;
+                margin-top: 24px;
+            }
+
+            .services-snapshot-container .accordion-item.active .accordion-icon {
+                transform: rotate(45deg);
+            }
+
+            .services-snapshot-container .column h3 {
+                margin-bottom: 0;
+            }
+
+            .services-snapshot-container .accordion-item.active .column h3 {
+                margin-bottom: 24px;
+            }
+
+            /* Case Study CTA Button - Smaller on Mobile */
+            .case-study-cta-btn {
+                font-size: 14px !important;
+                padding: 12px 24px !important;
+            }
+
+            /* Center Case Studies Headers on Mobile */
+            #case-studies h2,
+            #case-studies p[style*="text-transform: uppercase"],
+            #case-studies .col-12.col-lg-6 > p:first-child,
+            #case-studies .col-12.col-lg-6 > h2,
+            #case-studies .col-12.col-lg-6 > p[style*="font-size: 18px"] {
+                text-align: center !important;
+            }
+
+            /* ========== MOBILE TEXT CENTERING FOR ALL PAGES ========== */
+
+            /* Center all headings */
+            h1, h2, h3, h4, h5, h6 {
+                text-align: center !important;
+            }
+
+            /* Center all paragraphs and text content */
+            p, .hero-subtext, .section-intro {
+                text-align: center !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* Center buttons and CTAs */
+            .cta-group {
+                justify-content: center !important;
+            }
+
+            .btn-primary, .btn-secondary {
+                display: block !important;
+                width: 100% !important;
+                max-width: 300px !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* Center row content on mobile */
+            .row {
+                text-align: center !important;
+            }
+
+            /* Center col content specifically */
+            .col-12, .col-md-6, .col-lg-6, .col-lg-4, .col-lg-3 {
+                text-align: center !important;
+            }
+
+            /* Ensure divs with flex maintain center alignment */
+            div[style*="display: flex"] {
+                justify-content: center !important;
+            }
+
+            /* Home page specific */
+            #home h1, #home h2, #home h3, #home p {
+                text-align: center !important;
+            }
+
+            /* About page specific */
+            #about h1, #about h2, #about h3, #about p {
+                text-align: center !important;
+            }
+
+            /* Services page specific */
+            #services h1, #services h2, #services h3, #services p {
+                text-align: center !important;
+            }
+
+            /* Pricing page specific */
+            #pricing h1, #pricing h2, #pricing h3, #pricing p {
+                text-align: center !important;
+            }
+
+            /* Contact page specific */
+            #contact h1, #contact h2, #contact h3, #contact p {
+                text-align: center !important;
+            }
+
+            /* Center text in specific styled divs */
+            div[style*="text-align: left"] {
+                text-align: center !important;
+            }
+
+            /* Split layout adjustments - ensure content centers when stacked */
+            .row.g-5 .col-12.col-lg-6 {
+                text-align: center !important;
+            }
+
+            .row.g-5 .col-12.col-lg-6 h1,
+            .row.g-5 .col-12.col-lg-6 h2,
+            .row.g-5 .col-12.col-lg-6 h3,
+            .row.g-5 .col-12.col-lg-6 p {
+                text-align: center !important;
+            }
+
+            /* Icon/feature sections */
+            div[style*="display: flex; gap:"] {
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
+            /* Business hours alignment fix for Contact page */
+            div[style*="text-align: left; display: inline-block"] {
+                text-align: center !important;
+                display: block !important;
+            }
+
+            /* Metrics and stats remain centered (already centered) */
+            .metric-display, .stat-badge {
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* ========== SERVICES SNAPSHOT MOBILE FIX ========== */
+
+            /* Fix padding for service cards on mobile */
+            div[style*="padding: 48px"] {
+                padding: 24px !important;
+            }
+
+            /* Reduce heading size in service cards */
+            div[style*="font-size: 28px"][style*="font-weight: 800"] {
+                font-size: 22px !important;
+            }
+
+            /* Fix icon container alignment */
+            div[style*="display: flex; align-items: center; gap: 16px"] {
+                flex-direction: row !important;
+                align-items: center !important;
+                text-align: left !important;
+            }
+
+            /* Keep icon size reasonable */
+            div[style*="width: 70px; height: 70px"] {
+                width: 50px !important;
+                height: 50px !important;
+            }
+
+            div[style*="width: 70px; height: 70px"] i {
+                font-size: 24px !important;
+            }
+
+            /* Fix list items alignment in service cards */
+            div[style*="background: #F8F4F0"] li {
+                text-align: left !important;
+            }
+
+            div[style*="background: #F8F4F0"] li span {
+                font-size: 14px !important;
+            }
+
+            /* Checkmark icons - keep left aligned */
+            div[style*="width: 24px; height: 24px"][style*="border-radius: 50%"] {
+                flex-shrink: 0 !important;
+            }
+
+            /* Package label */
+            div[style*="font-size: 12px"][style*="font-weight: 700"][style*="letter-spacing: 1px"] {
+                font-size: 11px !important;
+            }
+
+            /* Services Snapshot section title */
+            section[style*="background: #A30000"] h2 {
+                font-size: 32px !important;
+            }
+
+            section[style*="background: #A30000"] p[style*="font-size: 19px"] {
+                font-size: 16px !important;
+            }
+
+            /* ========== FOOTER MOBILE CENTERING ========== */
+
+            /* Center all footer content on mobile */
+            .footer-main {
+                text-align: center !important;
+            }
+
+            .footer-brand {
+                align-items: center !important;
+            }
+
+            .footer-logo {
+                justify-content: center !important;
+            }
+
+            .footer-description {
+                text-align: center !important;
+            }
+
+            .footer-section {
+                text-align: center !important;
+            }
+
+            .footer-section h4 {
+                text-align: center !important;
+            }
+
+            .footer-section p,
+            .footer-section a {
+                text-align: center !important;
+            }
+
+            /* Center social links */
+            .social-links {
+                justify-content: center !important;
+            }
+
+            /* Center footer bottom content */
+            .footer-bottom {
+                text-align: center !important;
+                justify-content: center !important;
+            }
+
+            .footer-links {
+                justify-content: center !important;
+            }
+
+            /* ========== HIDE FLOATING BADGES ON MOBILE ========== */
+
+            /* Hide all floating badges on Why Choose Us section on mobile */
+            div[style*="position: absolute"][style*="z-index: 2"][data-aos*="zoom-in"] {
+                display: none !important;
+            }
+
+            /* Hide the background decorative circle too */
+            div[style*="position: absolute"][style*="transform: rotate(3deg)"] {
+                display: none !important;
+            }
+
+            /* ========== BOOTSTRAP-STYLE RESPONSIVE UTILITIES ========== */
+
+            /* Responsive padding reductions */
+            section[style*="padding: 100px 0"] {
+                padding: 60px 0 !important;
+            }
+
+            div[style*="padding: 48px"],
+            div[style*="padding: 60px"] {
+                padding: 24px !important;
+            }
+
+            div[style*="padding: 40px"] {
+                padding: 20px !important;
+            }
+
+            div[style*="padding: 32px"] {
+                padding: 16px !important;
+            }
+
+            /* Responsive text sizes using Bootstrap approach */
+            h1, .h1 {
+                font-size: 2rem !important; /* 32px */
+            }
+
+            h2, .h2 {
+                font-size: 1.75rem !important; /* 28px */
+            }
+
+            h3, .h3 {
+                font-size: 1.5rem !important; /* 24px */
+            }
+
+            h4, .h4 {
+                font-size: 1.25rem !important; /* 20px */
+            }
+
+            /* Responsive font sizes for specific elements */
+            p[style*="font-size: 20px"],
+            p[style*="font-size: 19px"],
+            p[style*="font-size: 18px"] {
+                font-size: 1rem !important; /* 16px */
+            }
+
+            div[style*="font-size: 48px"],
+            div[style*="font-size: 42px"] {
+                font-size: 1.75rem !important; /* 28px */
+            }
+
+            div[style*="font-size: 36px"],
+            div[style*="font-size: 32px"] {
+                font-size: 1.5rem !important; /* 24px */
+            }
+
+            div[style*="font-size: 28px"],
+            div[style*="font-size: 24px"] {
+                font-size: 1.25rem !important; /* 20px */
+            }
+
+            /* Gap adjustments */
+            .row.g-5 {
+                gap: 2rem !important;
+            }
+
+            .row.g-4 {
+                gap: 1.5rem !important;
+            }
+
+            /* Margin adjustments */
+            div[style*="margin-bottom: 60px"],
+            div[style*="margin-bottom: 48px"] {
+                margin-bottom: 2rem !important;
+            }
+
+            div[style*="margin-bottom: 32px"],
+            div[style*="margin-bottom: 28px"] {
+                margin-bottom: 1.5rem !important;
+            }
+
+            div[style*="margin-bottom: 24px"] {
+                margin-bottom: 1rem !important;
+            }
+
+            /* ========== HERO STATS MOBILE FIX ========== */
+
+            /* Target the stats section (Revenue Generated, Systems Built, Avg Growth) */
+            /* Make the numbers smaller */
+            .d-flex.flex-wrap.gap-4 div[style*="font-size: 32px"] {
+                font-size: 1.25rem !important; /* 20px instead of 32px */
+            }
+
+            /* Make the labels smaller */
+            .d-flex.flex-wrap.gap-4 div[style*="font-size: 13px"] {
+                font-size: 0.75rem !important; /* 12px instead of 13px */
+            }
+
+            /* Reduce gap between stats */
+            .d-flex.flex-wrap.gap-4.mt-4 {
+                gap: 1rem !important;
+            }
+
+            /* ========== WHY CHOOSE US SECTION MOBILE FIX ========== */
+
+            /* Keep the "Cut overhead..." paragraph left-aligned on mobile */
+            .order-1.order-lg-2 p[style*="font-size: 18px"] {
+                text-align: left !important;
+            }
+
+            /* Keep benefits list left-aligned on mobile - override global centering */
+            .order-1.order-lg-2 div[style*="display: flex; flex-direction: column"] {
+                text-align: left !important;
+            }
+
+            .order-1.order-lg-2 div[style*="display: flex; align-items: start"] {
+                text-align: left !important;
+                flex-direction: row !important; /* Keep icons beside text */
+            }
+
+            /* Keep benefit titles and descriptions left-aligned */
+            .order-1.order-lg-2 div[style*="display: flex; align-items: start"] h4,
+            .order-1.order-lg-2 div[style*="display: flex; align-items: start"] p {
+                text-align: left !important;
+            }
+
+            /* Ensure icon boxes don't get centered */
+            .order-1.order-lg-2 div[style*="width: 52px; height: 52px"] {
+                margin-left: 0 !important;
+                margin-right: 16px !important;
+            }
+
+            /* ========== ADD-ONS SECTION MOBILE FIX ========== */
+
+            /* Hide add-on items after the 5th one on mobile */
+            #services .row.g-3 > div:nth-child(n+6):not(.addon-more) {
+                display: none !important;
+            }
+
+            /* Show the "and many more" element only on mobile */
+            .addon-more {
+                display: block !important;
+            }
+
+            /* ========== ABOUT PAGE MOBILE OPTIMIZATION ========== */
+
+            /* Fix section padding on About page */
+            #about section {
+                padding: 60px 0 !important;
+            }
+
+            /* Remove margin-bottom: 100px from About page */
+            #about [style*="margin-bottom: 100px"] {
+                margin-bottom: 40px !important;
+            }
+
+            /* Fix content box padding on About page */
+            #about div[style*="padding: 48px"] {
+                padding: 24px !important;
+            }
+
+            /* Fix Vision/Mission card padding - override for specific section */
+            #about section[style*="background: #A30000"] div[style*="padding: 48px"] {
+                padding: 32px 20px !important;
+            }
+
+            /* Fix image heights on About page */
+            #about img[style*="height: 500px"] {
+                height: 300px !important;
+            }
+
+            #about img[style*="height: 300px"] {
+                height: 200px !important;
+            }
+
+            /* Reduce heading sizes on About page */
+            #about h2[style*="font-size: 36px"],
+            #about h2[style*="font-size: 32px"] {
+                font-size: 24px !important;
+            }
+
+            #about h2[style*="font-size: 42px"] {
+                font-size: 28px !important;
+            }
+
+            #about h3[style*="font-size: 24px"] {
+                font-size: 20px !important;
+            }
+
+            /* Reduce paragraph text sizes on About page */
+            #about p[style*="font-size: 20px"] {
+                font-size: 16px !important;
+            }
+
+            #about p[style*="font-size: 18px"] {
+                font-size: 15px !important;
+            }
+
+            #about p[style*="font-size: 17px"] {
+                font-size: 15px !important;
+            }
+
+            /* Reduce icon sizes on About page */
+            #about div[style*="width: 70px; height: 70px"] {
+                width: 50px !important;
+                height: 50px !important;
+            }
+
+            #about div[style*="width: 70px; height: 70px"] i {
+                font-size: 24px !important;
+            }
+
+            /* Fix Vision/Mission card padding */
+            #about .row.g-5 {
+                gap: 1.5rem !important;
+            }
+
+            /* Reduce card image heights */
+            #about div[style*="height: 220px"] {
+                height: 150px !important;
+            }
+
+            /* ========== ABOUT PAGE AOS OPTIMIZATION ========== */
+
+            /* Speed up AOS animations on About page - reduce duration */
+            #about [data-aos] {
+                transition-duration: 400ms !important;
+            }
+
+            /* Remove all AOS delays on About page for instant appearance */
+            #about [data-aos][data-aos-delay] {
+                transition-delay: 0ms !important;
+            }
+
+            /* Make content visible immediately on About page */
+            #about [data-aos]:not(.aos-animate) {
+                opacity: 0.3 !important;
+            }
+
+            /* ========== PRICING PAGE MOBILE OPTIMIZATION ========== */
+
+            /* Hide vertical line in "How It Works" section on Pricing page */
+            #pricing div[style*="position: absolute; left: 29px"] {
+                display: none !important;
+            }
+
+            /* ========== CAROUSEL MOBILE OPTIMIZATION ========== */
+
+            /* Fix carousel card height on mobile */
+            #reviewsCarousel .carousel-item > .row > div > div {
+                min-height: 400px !important;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            /* Make carousel swipeable on mobile */
+            #reviewsCarousel {
+                touch-action: pan-y pinch-zoom;
+            }
+
+            /* Improve navigation buttons on mobile */
+            #reviewsCarousel .carousel-control-prev,
+            #reviewsCarousel .carousel-control-next {
+                width: 15% !important;
+            }
+
+            #reviewsCarousel .carousel-control-prev span,
+            #reviewsCarousel .carousel-control-next span {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            #reviewsCarousel .carousel-control-prev span i,
+            #reviewsCarousel .carousel-control-next span i {
+                font-size: 16px !important;
+            }
+
+            /* Add padding to carousel indicators */
+            #reviewsCarousel .carousel-indicators {
+                margin-bottom: 0 !important;
+                padding-bottom: 20px;
+            }
+
+            /* Reduce card padding on mobile */
+            #reviewsCarousel .carousel-item > .row > div > div {
+                padding: 32px 24px !important;
+            }
+
+            /* ========== WHY CHOOSE US SECTION MOBILE FIX ========== */
+
+            /* Ensure benefit text is left-aligned on mobile for Why Choose Us benefits */
+            #home .col-12.col-lg-6 div[style*="flex-direction: column"] h4,
+            #home .col-12.col-lg-6 div[style*="flex-direction: column"] p,
+            #home .row.g-5 .col-12.col-lg-6 div[style*="flex-direction: column"] h4,
+            #home .row.g-5 .col-12.col-lg-6 div[style*="flex-direction: column"] p {
+                text-align: left !important;
+            }
+        }
